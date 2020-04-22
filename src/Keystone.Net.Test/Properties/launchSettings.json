@@ -20,7 +20,7 @@
     "Keystone.Net.Test": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/authentication",
+      "launchUrl": "swagger",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

@@ -58,9 +58,9 @@ namespace Keystone.Net
             return response;
         }
 
-        protected string Serialize<T>( T obj)
+        protected string Serialize<T>(T obj)
         {
-            return JsonConvert.SerializeObject(obj);
+            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
         }
 
         private static T Deserialize<T>(Stream stream)
