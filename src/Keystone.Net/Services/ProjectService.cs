@@ -5,6 +5,9 @@ using Newtonsoft.Json.Linq;
 
 namespace Keystone.Net.Services
 {
+    /// <summary>
+    /// https://docs.openstack.org/api-ref/identity/v3/index.html#projects
+    /// </summary>
     public class ProjectService : AbstractService
     {
         public ProjectService(HttpClient client) : base(client)
@@ -34,6 +37,46 @@ namespace Keystone.Net.Services
                 Method = HttpMethod.Post,
                 Token = token,
                 Body = body
+            };
+
+            return await ExecuteAsync<JObject>(request);
+        }
+
+        public async Task<Response<JObject>> Details(string token, string id)
+        {
+            var request = new Request
+            {
+                Uri = $"/v3/projects/{id}",
+                Method = HttpMethod.Get,
+                Token = token
+            };
+
+            return await ExecuteAsync<JObject>(request);
+        }
+
+        public async Task<Response<JObject>> Update(string token, string id, Project project)
+        {
+            var form = new { project };
+            var body = Serialize(form);
+
+            var request = new Request
+            {
+                Uri = $"/v3/projects/{id}",
+                Method = new HttpMethod("PATCH"),
+                Token = token,
+                Body = body
+            };
+
+            return await ExecuteAsync<JObject>(request);
+        }
+
+        public async Task<Response<JObject>> Delete(string token, string id)
+        {
+            var request = new Request
+            {
+                Uri = $"/v3/projects/{id}",
+                Method = HttpMethod.Delete,
+                Token = token
             };
 
             return await ExecuteAsync<JObject>(request);
