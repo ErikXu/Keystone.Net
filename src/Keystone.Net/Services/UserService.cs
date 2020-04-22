@@ -129,7 +129,7 @@ namespace Keystone.Net.Services
         /// </summary>
         public async Task<Response<JObject>> ChangePassword(string id, ChangePassword changePassword)
         {
-            var form = new { changePassword };
+            var form = new { user = changePassword };
             var body = Serialize(form);
 
             var request = new Request
@@ -234,12 +234,6 @@ namespace Keystone.Net.Services
     }
 
     public class ChangePassword
-    {
-        [JsonProperty("user")]
-        public ChangePasswordOptions User { get; set; }
-    }
-
-    public class ChangePasswordOptions
     {
         [JsonProperty("password")]
         public string Password { get; set; }
