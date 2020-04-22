@@ -1,0 +1,10 @@
+#!/usr/bin/sh
+
+chmod 755 /var/log/keystone
+chown -R keystone:keystone /var/log/keystone
+
+keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
+
+keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
+
+exec httpd -DFOREGROUND "$@"
