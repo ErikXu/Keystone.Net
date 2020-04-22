@@ -14,6 +14,9 @@ namespace Keystone.Net.Services
         {
         }
 
+        /// <summary>
+        /// List projects
+        /// </summary>
         public async Task<Response<JObject>> List(string token)
         {
             var request = new Request
@@ -26,6 +29,9 @@ namespace Keystone.Net.Services
             return await ExecuteAsync<JObject>(request);
         }
 
+        /// <summary>
+        /// Create project
+        /// </summary>
         public async Task<Response<JObject>> Create(string token, Project project)
         {
             var form = new { project };
@@ -42,6 +48,9 @@ namespace Keystone.Net.Services
             return await ExecuteAsync<JObject>(request);
         }
 
+        /// <summary>
+        /// Show project details
+        /// </summary>
         public async Task<Response<JObject>> Details(string token, string id)
         {
             var request = new Request
@@ -54,6 +63,9 @@ namespace Keystone.Net.Services
             return await ExecuteAsync<JObject>(request);
         }
 
+        /// <summary>
+        /// Update project
+        /// </summary>
         public async Task<Response<JObject>> Update(string token, string id, Project project)
         {
             var form = new { project };
@@ -70,6 +82,9 @@ namespace Keystone.Net.Services
             return await ExecuteAsync<JObject>(request);
         }
 
+        /// <summary>
+        /// Delete project
+        /// </summary>
         public async Task<Response<JObject>> Delete(string token, string id)
         {
             var request = new Request
