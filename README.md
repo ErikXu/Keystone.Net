@@ -21,9 +21,7 @@ docker run --name memcache -d -p 11211:11211 memcached:1.6-alpine
 ```
 
 c. Prepare config  
-`
-vi /etc/keystone/keystone.conf
-`
+*vi /etc/keystone/keystone.conf*
 ```
 [DEFAULT]
 max_project_tree_depth = 10
@@ -51,14 +49,14 @@ memcache_servers = {your id}:11211
 
 Please replace {username}, {password}, {your id} with your own.
 
-Start keystone  
+d. Start keystone  
 ```
 mkdir -p /var/log/keystone
 mkdir -p /var/log/httpd
 docker run --name keystone -d -v /etc/keystone/keystone.conf:/etc/keystone/keystone.conf -v /var/log/keystone:/var/log/keystone -v  /var/log/httpd:/var/log/httpd -p 5000:5000 keystone:v3
 ```
 
-Init database  
+e. Init database  
 Create a database named keystone, and execute the following scripts:  
 ```
 docker exec -it keystone bash
@@ -66,7 +64,7 @@ chown keystone.keystone /var/log/keystone/keystone.log
 su -s /bin/sh -c "keystone-manage db_sync" keystone
 ```
 
-Register service  
+f. Register service  
 ```
 docker exec -it keystone bash
 keystone-manage bootstrap --bootstrap-password {password} --bootstrap-admin-url http://{your id}:5000/v3/ --bootstrap-internal-url http://{your id}:5000/v3/ --bootstrap-public-url http://{your id}:5000/v3/ --bootstrap-region-id {region id}
