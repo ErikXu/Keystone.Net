@@ -4,6 +4,9 @@ using Newtonsoft.Json.Linq;
 
 namespace Keystone.Net.Services
 {
+    /// <summary>
+    /// https://docs.openstack.org/api-ref/identity/v3/index.html#system-role-assignments
+    /// </summary>
     public class SystemRoleAssignService : AbstractService
     {
         public SystemRoleAssignService(HttpClient client) : base(client)
