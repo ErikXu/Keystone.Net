@@ -14,6 +14,8 @@ namespace Keystone.Net
 
         public string Token { get; set; }
 
+        public string TargetToken { get; set; }
+
         public HttpMethod Method { get; set; }
 
         public string Body { get; set; } = string.Empty;

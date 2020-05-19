@@ -36,6 +36,11 @@ namespace Keystone.Net
                 message.Headers.Add("X-Auth-Token", request.Token);
             }
 
+            if (!string.IsNullOrWhiteSpace(request.TargetToken))
+            {
+                message.Headers.Add("X-Subject-Token", request.TargetToken);
+            }
+
             var result = await Client.SendAsync(message);
 
             var response = new Response<TBody>
@@ -51,7 +56,15 @@ namespace Keystone.Net
             else
             {
                 var stream = await result.Content.ReadAsStreamAsync();
-                response.Body = stream.Length > 0 ? Deserialize<TBody>(stream) : new TBody();
+                if (stream.GetType().Name.Equals("EmptyReadStream"))
+                {
+                    response.Body = new TBody();
+                }
+                else
+                {
+                    response.Body = stream.Length > 0 ? Deserialize<TBody>(stream) : new TBody();
+                }
+                
                 response.Headers = result.Headers.ToDictionary(kv => kv.Key, kv => kv.Value.First());
             }
 
