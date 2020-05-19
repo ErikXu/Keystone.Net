@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Keystone.Net.Test.Controllers
 {
-    [Route("api/authentication")]
+    [Route("api/auth")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
@@ -217,6 +217,45 @@ namespace Keystone.Net.Test.Controllers
         public async Task<IActionResult> GetServiceCatalog(string token)
         {
             var result = await _authenticationService.GetServiceCatalog(token);
+
+            if (result.IsSuccessStatusCode)
+            {
+                return Ok(result.Body.ToString());
+            }
+
+            return StatusCode((int)result.StatusCode, result.Message);
+        }
+
+        [HttpGet("projects")]
+        public async Task<IActionResult> GetProjectScopes(string token)
+        {
+            var result = await _authenticationService.GetProjectScopes(token);
+
+            if (result.IsSuccessStatusCode)
+            {
+                return Ok(result.Body.ToString());
+            }
+
+            return StatusCode((int)result.StatusCode, result.Message);
+        }
+
+        [HttpGet("domains")]
+        public async Task<IActionResult> GetDomainScopes(string token)
+        {
+            var result = await _authenticationService.GetDomainScopes(token);
+
+            if (result.IsSuccessStatusCode)
+            {
+                return Ok(result.Body.ToString());
+            }
+
+            return StatusCode((int)result.StatusCode, result.Message);
+        }
+
+        [HttpGet("system")]
+        public async Task<IActionResult> GetSystemScopes(string token)
+        {
+            var result = await _authenticationService.GetSystemScopes(token);
 
             if (result.IsSuccessStatusCode)
             {

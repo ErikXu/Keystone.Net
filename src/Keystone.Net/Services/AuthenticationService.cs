@@ -478,6 +478,42 @@ namespace Keystone.Net.Services
 
             return await ExecuteAsync<JObject>(request);
         }
+
+        public async Task<Response<JObject>> GetProjectScopes(string token)
+        {
+            var request = new Request
+            {
+                Uri = "/v3/auth/projects",
+                Method = HttpMethod.Get,
+                Token = token
+            };
+
+            return await ExecuteAsync<JObject>(request);
+        }
+
+        public async Task<Response<JObject>> GetDomainScopes(string token)
+        {
+            var request = new Request
+            {
+                Uri = "/v3/auth/domains",
+                Method = HttpMethod.Get,
+                Token = token
+            };
+
+            return await ExecuteAsync<JObject>(request);
+        }
+
+        public async Task<Response<JObject>> GetSystemScopes(string token)
+        {
+            var request = new Request
+            {
+                Uri = "/v3/auth/system",
+                Method = HttpMethod.Get,
+                Token = token
+            };
+
+            return await ExecuteAsync<JObject>(request);
+        }
     }
 
     public class AuthMethod
