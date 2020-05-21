@@ -25,7 +25,7 @@ namespace Keystone.Net.Test.Controllers
 
             if (result.IsSuccessStatusCode)
             {
-                return Ok(result.Body.ToString());
+                return Ok(result.Body);
             }
 
             return StatusCode((int)result.StatusCode, result.Message);

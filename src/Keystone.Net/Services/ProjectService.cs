@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -17,7 +18,7 @@ namespace Keystone.Net.Services
         /// <summary>
         /// List projects
         /// </summary>
-        public async Task<Response<JObject>> List(string token, string domainId)
+        public async Task<Response<ProjectListResult>> List(string token, string domainId)
         {
             var request = new Request
             {
@@ -28,7 +29,7 @@ namespace Keystone.Net.Services
 
             request.AddQuery("domain_id", domainId);
 
-            return await ExecuteAsync<JObject>(request);
+            return await ExecuteAsync<ProjectListResult>(request);
         }
 
         /// <summary>
@@ -126,5 +127,48 @@ namespace Keystone.Net.Services
 
     public class ProjectOptions
     {
+    }
+
+
+    public class ProjectListResult
+    {
+        [JsonProperty("links")]
+        public Links Links { get; set; }
+
+        [JsonProperty("projects")]
+        public List<ProjectListItem> Projects { get; set; }
+    }
+
+    public class ProjectListItem
+    {
+        [JsonProperty("is_domain")]
+        public bool IsDomain { get; set; }
+
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
+        [JsonProperty("links")]
+        public Links Links { get; set; }
+
+        [JsonProperty("tags")]
+        public List<string> Tags { get; set; }
+
+        [JsonProperty("enabled")]
+        public bool Enabled { get; set; }
+
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("parent_id")]
+        public string ParentId { get; set; }
+
+        [JsonProperty("domain_id")]
+        public string DomainId { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("options")]
+        public object Options { get; set; }
     }
 }

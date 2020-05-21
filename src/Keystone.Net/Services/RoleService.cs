@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -17,7 +18,7 @@ namespace Keystone.Net.Services
         /// <summary>
         /// List roles
         /// </summary>
-        public async Task<Response<JObject>> List(string token, string domainId)
+        public async Task<Response<RoleListResult>> List(string token, string domainId)
         {
             var request = new Request
             {
@@ -28,7 +29,7 @@ namespace Keystone.Net.Services
 
             request.AddQuery("domain_id", domainId);
 
-            return await ExecuteAsync<JObject>(request);
+            return await ExecuteAsync<RoleListResult>(request);
         }
 
         /// <summary>
@@ -464,4 +465,35 @@ namespace Keystone.Net.Services
     }
 
     public class RolesOptions { }
+
+
+    public class RoleListResult
+    {
+        [JsonProperty("links")]
+        public Links Links { get; set; }
+
+        [JsonProperty("roles")]
+        public List<RoleListItem> Roles { get; set; }
+    }
+
+    public class RoleListItem
+    {
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
+        [JsonProperty("links")]
+        public Links Links { get; set; }
+
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("domain_id")]
+        public object DomainId { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("options")]
+        public object Options { get; set; }
+    }
 }

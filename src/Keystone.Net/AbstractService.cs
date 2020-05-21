@@ -131,4 +131,16 @@ namespace Keystone.Net
             return queryString.ToString();
         }
     }
+
+    public class Links
+    {
+        [JsonProperty("self")]
+        public string Self { get; set; }
+
+        [JsonProperty("previous")]
+        public object Previous { get; set; }
+
+        [JsonProperty("next")]
+        public object Next { get; set; }
+    }
 }

@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -17,7 +18,7 @@ namespace Keystone.Net.Services
         /// <summary>
         /// List domains
         /// </summary>
-        public async Task<Response<JObject>> List(string token)
+        public async Task<Response<DomainListResult>> List(string token)
         {
             var request = new Request
             {
@@ -26,7 +27,7 @@ namespace Keystone.Net.Services
                 Token = token
             };
 
-            return await ExecuteAsync<JObject>(request);
+            return await ExecuteAsync<DomainListResult>(request);
         }
 
         /// <summary>
@@ -114,5 +115,38 @@ namespace Keystone.Net.Services
 
         [JsonProperty("options")]
         public object Options { get; set; }
+    }
+
+    public class DomainListResult
+    {
+        [JsonProperty("domains")]
+        public List<DomainListItem> Domains { get; set; }
+
+        [JsonProperty("links")]
+        public Links Links { get; set; }
+    }
+
+    public class DomainListItem
+    {
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
+        [JsonProperty("links")]
+        public Links Links { get; set; }
+
+        [JsonProperty("enabled")]
+        public bool Enabled { get; set; }
+
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("options")]
+        public object Options { get; set; }
+
+        [JsonProperty("tags")]
+        public List<string> Tags { get; set; }
     }
 }

@@ -1,5 +1,7 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Keystone.Net.Services
@@ -16,7 +18,7 @@ namespace Keystone.Net.Services
         /// <summary>
         /// List groups
         /// </summary>
-        public async Task<Response<JObject>> List(string token, string domainId)
+        public async Task<Response<GroupListResult>> List(string token, string domainId)
         {
             var request = new Request
             {
@@ -27,7 +29,7 @@ namespace Keystone.Net.Services
 
             request.AddQuery("domain_id", domainId);
 
-            return await ExecuteAsync<JObject>(request);
+            return await ExecuteAsync<GroupListResult>(request);
         }
 
         /// <summary>
@@ -163,10 +165,39 @@ namespace Keystone.Net.Services
 
     public class Group
     {
+        [JsonProperty("name")]
         public string Name { get; set; }
 
+        [JsonProperty("description")]
         public string Description { get; set; }
 
+        [JsonProperty("domainId")]
         public string DomainId { get; set; }
+    }
+
+
+    public class GroupListResult
+    {
+        [JsonProperty("links")]
+        public Links Links { get; set; }
+
+        [JsonProperty("groups")]
+        public List<GroupListItem> Groups { get; set; }
+    }
+
+
+    public class GroupListItem
+    {
+        [JsonProperty("domain_id")]
+        public string DomainId { get; set; }
+
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("links")]
+        public Links Links { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
     }
 }

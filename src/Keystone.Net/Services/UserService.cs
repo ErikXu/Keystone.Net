@@ -18,7 +18,7 @@ namespace Keystone.Net.Services
         /// <summary>
         /// List users
         /// </summary>
-        public async Task<Response<JObject>> List(string token, string domainId)
+        public async Task<Response<UserListResult>> List(string token, string domainId)
         {
             var request = new Request
             {
@@ -29,7 +29,7 @@ namespace Keystone.Net.Services
 
             request.AddQuery("domain_id", domainId);
 
-            return await ExecuteAsync<JObject>(request);
+            return await ExecuteAsync<UserListResult>(request);
         }
 
         /// <summary>
@@ -242,5 +242,50 @@ namespace Keystone.Net.Services
 
         [JsonProperty("original_password")]
         public string OriginalPassword { get; set; }
+    }
+
+    public class UserListResult
+    {
+        [JsonProperty("users")]
+        public List<UserListItem> Users { get; set; }
+
+        [JsonProperty("links")]
+        public Links Links { get; set; }
+    }
+
+    public class UserListItem
+    {
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("links")]
+        public Links Links { get; set; }
+
+        [JsonProperty("domain_id")]
+        public string DomainId { get; set; }
+
+        [JsonProperty("enabled")]
+        public bool Enabled { get; set; }
+
+        [JsonProperty("options")]
+        public UserListItemOptions Options { get; set; }
+
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("email")]
+        public string Email { get; set; }
+
+        [JsonProperty("password_expires_at")]
+        public object PasswordExpiresAt { get; set; }
+
+        [JsonProperty("description")]
+        public string Description { get; set; }
+    }
+
+    public class UserListItemOptions
+    {
+        [JsonProperty("ignore_password_expiry")]
+        public bool IgnorePasswordExpiry { get; set; }
     }
 }
