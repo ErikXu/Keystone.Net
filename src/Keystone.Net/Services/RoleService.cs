@@ -17,7 +17,7 @@ namespace Keystone.Net.Services
         /// <summary>
         /// List roles
         /// </summary>
-        public async Task<Response<JObject>> List(string token)
+        public async Task<Response<JObject>> List(string token, string domainId)
         {
             var request = new Request
             {
@@ -25,6 +25,8 @@ namespace Keystone.Net.Services
                 Method = HttpMethod.Get,
                 Token = token
             };
+
+            request.AddQuery("domain_id", domainId);
 
             return await ExecuteAsync<JObject>(request);
         }

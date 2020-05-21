@@ -19,9 +19,9 @@ namespace Keystone.Net.Test.Controllers
         /// List users
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> List(string token)
+        public async Task<IActionResult> List(string token, string domainId)
         {
-            var result = await _userService.List(token);
+            var result = await _userService.List(token, domainId);
 
             if (result.IsSuccessStatusCode)
             {

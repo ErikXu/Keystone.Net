@@ -24,6 +24,11 @@ namespace Keystone.Net
 
         protected async Task<Response<TBody>> ExecuteAsync<TBody>(Request request) where TBody : new()
         {
+            if (request.Queries != null && request.Queries.Count > 0)
+            {
+                request.Uri = AppendQueries(request.Uri, request.Queries);
+            }
+
             var message = new HttpRequestMessage
             {
                 RequestUri = new Uri(Client.BaseAddress.AbsoluteUri.TrimEnd('/') + request.Uri),
